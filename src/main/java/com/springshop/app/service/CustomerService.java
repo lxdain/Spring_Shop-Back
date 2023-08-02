@@ -32,11 +32,28 @@ public class CustomerService {
         return customerRepository.save(customer);
     }
 
-    public Customer updateCustomer(Customer customer) {
-        return customerRepository.save(customer);
+    public Customer updateCustomer(int id, Customer customer) {
+        Customer existingCustomer = customerRepository.findById(id)
+                .orElseThrow(() -> new CustomerNotFoundException("Customer with ID " + id + " not found."));
+
+        existingCustomer.setCustomerImage(customer.getCustomerImage());
+        existingCustomer.setCustomerName(customer.getCustomerName());
+        existingCustomer.setCustomerGender(customer.getCustomerGender());
+        existingCustomer.setCustomerDob(customer.getCustomerDob());
+        existingCustomer.setCustomerAddress(customer.getCustomerAddress());
+        existingCustomer.setCustomerPhone(customer.getCustomerPhone());
+        existingCustomer.setCustomerEmail(customer.getCustomerEmail());
+        existingCustomer.setCustomerCreditCard(customer.getCustomerCreditCard());
+
+        return customerRepository.save(existingCustomer);
     }
 
     public void deleteCustomerById(int id) {
-        customerRepository.deleteById(id);
+        Optional<Customer> optionalCustomer = customerRepository.findById(id);
+        if (optionalCustomer.isPresent()) {
+            customerRepository.deleteById(id);
+        } else {
+            throw new CustomerNotFoundException("Customer with ID " + id + " not found.");
+        }
     }
 }

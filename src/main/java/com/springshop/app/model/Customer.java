@@ -21,7 +21,7 @@ public class Customer implements Serializable {
     private String customerEmail;
     private String customerCreditCard;
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "productCustomerId")
+    @JoinColumn(name = "customer_id")
     private List<Product> customerOrderHistory;
 
     public Customer() {}
