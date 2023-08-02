@@ -24,7 +24,7 @@ public class ProductService {
 
     public Product getProductById(int id) {
         Optional<Product> optionalProduct = productRepository.findById(id);
-        return optionalProduct.orElse(null);
+        return optionalProduct.orElseThrow(() -> new ProductNotFoundException("Product with ID " + id + " not found."));
     }
 
     public Product addProduct(Product product) {
