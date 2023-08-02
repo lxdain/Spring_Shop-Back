@@ -15,11 +15,27 @@ public class Product implements Serializable {
     private String productImage;
     private float productPrice;
     private int productQuantity;
+
     @ManyToOne
-    @JoinColumn(name = "productCustomerId")
+    @JoinColumn(name = "product_customer_id")
     private Customer customer;
 
+    // Constructors
+
     public Product() {}
+
+
+    public Product(int productId, String productName, String productDescription, String productImage, float productPrice, int productQuantity, Customer customer) {
+        this.productId = productId;
+        this.productName = productName;
+        this.productDescription = productDescription;
+        this.productImage = productImage;
+        this.productPrice = productPrice;
+        this.productQuantity = productQuantity;
+        this.customer = customer;
+    }
+
+    // Getters and Setters
 
     public int getProductId() {
         return productId;
@@ -69,13 +85,12 @@ public class Product implements Serializable {
         this.productQuantity = productQuantity;
     }
 
-    public Product(int productId, String productName, String productDescription, String productImage, float productPrice, int productQuantity) {
-        this.productId = productId;
-        this.productName = productName;
-        this.productDescription = productDescription;
-        this.productImage = productImage;
-        this.productPrice = productPrice;
-        this.productQuantity = productQuantity;
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     @Override
