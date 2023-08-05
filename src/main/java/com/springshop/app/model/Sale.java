@@ -20,23 +20,27 @@ public class Sale implements Serializable {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @ElementCollection
-    @CollectionTable(name = "sale_products", joinColumns = @JoinColumn(name = "sale_id"))
-    @Column(name = "product_id")
-    private List<Integer> productIds;
+    @ManyToMany
+    @JoinTable(
+            name = "sale_product",
+            joinColumns = @JoinColumn(name = "sale_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id")
+    )
+    private List<Product> products;
 
     private float saleItemPrice;
     private float saleTotal;
 
     // Constructors
 
-    public Sale() {}
+    public Sale() {
+    }
 
-    public Sale(int saleId, Date saleDate, Customer customer, List<Integer> productIds, float saleItemPrice, float saleTotal) {
+    public Sale(int saleId, Date saleDate, Customer customer, List<Product> products, float saleItemPrice, float saleTotal) {
         this.saleId = saleId;
         this.saleDate = saleDate;
         this.customer = customer;
-        this.productIds = productIds;
+        this.products = products;
         this.saleItemPrice = saleItemPrice;
         this.saleTotal = saleTotal;
     }
@@ -67,12 +71,12 @@ public class Sale implements Serializable {
         this.customer = customer;
     }
 
-    public List<Integer> getProductIds() {
-        return productIds;
+    public List<Product> getProducts() {
+        return products;
     }
 
-    public void setProductIds(List<Integer> productIds) {
-        this.productIds = productIds;
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 
     public float getSaleItemPrice() {
@@ -97,7 +101,7 @@ public class Sale implements Serializable {
                 "saleId=" + saleId +
                 ", saleDate=" + saleDate +
                 ", customer=" + customer +
-                ", productIds=" + productIds +
+                ", products=" + products +
                 ", saleItemPrice=" + saleItemPrice +
                 ", saleTotal=" + saleTotal +
                 '}';
