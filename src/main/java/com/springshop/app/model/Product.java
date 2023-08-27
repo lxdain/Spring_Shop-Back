@@ -14,28 +14,18 @@ public class Product implements Serializable {
     private String productDescription;
     private String productImage;
     private float productPrice;
-    private int productQuantity;
-
-    @ManyToOne
-    @JoinColumn(name = "product_customer_id")
-    private Customer customer;
 
     // Constructors
 
     public Product() {}
 
-
-    public Product(int productId, String productName, String productDescription, String productImage, float productPrice, int productQuantity, Customer customer) {
+    public Product(int productId, String productName, String productDescription, String productImage, float productPrice) {
         this.productId = productId;
         this.productName = productName;
         this.productDescription = productDescription;
         this.productImage = productImage;
         this.productPrice = productPrice;
-        this.productQuantity = productQuantity;
-        this.customer = customer;
     }
-
-    // Getters and Setters
 
     public int getProductId() {
         return productId;
@@ -77,22 +67,6 @@ public class Product implements Serializable {
         this.productPrice = productPrice;
     }
 
-    public int getProductQuantity() {
-        return productQuantity;
-    }
-
-    public void setProductQuantity(int productQuantity) {
-        this.productQuantity = productQuantity;
-    }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
     @Override
     public String toString() {
         return "Product{" +
@@ -101,7 +75,6 @@ public class Product implements Serializable {
                 ", productDescription='" + productDescription + '\'' +
                 ", productImage='" + productImage + '\'' +
                 ", productPrice=" + productPrice +
-                ", productQuantity=" + productQuantity +
                 '}';
     }
 }
