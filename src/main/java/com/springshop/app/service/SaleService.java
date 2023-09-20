@@ -1,6 +1,5 @@
 package com.springshop.app.service;
 
-import com.springshop.app.exception.ProductNotFoundException;
 import com.springshop.app.exception.SaleNotFoundException;
 import com.springshop.app.model.Sale;
 import com.springshop.app.repository.SaleRepository;
@@ -8,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class SaleService {
@@ -33,15 +31,33 @@ public class SaleService {
         return saleRepository.save(sale);
     }
 
+//    public Sale updateSale(int id, Sale updatedSale) {
+//        Sale existingSale = getSaleById(id);
+//        if (existingSale == null) {
+//            throw new SaleNotFoundException("Sale not found with id: " + id);
+//        }
+//
+//        existingSale.setSaleDate(updatedSale.getSaleDate());
+//        existingSale.setProductPrice(updatedSale.getProduct().getProductPrice()); // Update productPrice
+//        existingSale.setTotalPrice(updatedSale.getTotalPrice()); // Update total price
+//
+//        return saleRepository.save(existingSale);
+//    }
+
     public Sale updateSale(int id, Sale updatedSale) {
         Sale existingSale = getSaleById(id);
         if (existingSale == null) {
             throw new SaleNotFoundException("Sale not found with id: " + id);
         }
 
+        // Update saleDate
         existingSale.setSaleDate(updatedSale.getSaleDate());
-        existingSale.setSaleItemPrice(updatedSale.getSaleItemPrice());
-        existingSale.setSaleTotal(updatedSale.getSaleTotal());
+
+        // Update productPrice from the associated Product
+        existingSale.setProduct(updatedSale.getProduct()); // Update the associated Product
+
+        // Recalculate totalPrice based on the updated productPrice and quantity
+        existingSale.setTotalPrice(existingSale.calculateTotalPrice());
 
         return saleRepository.save(existingSale);
     }

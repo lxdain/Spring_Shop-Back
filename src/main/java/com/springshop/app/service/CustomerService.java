@@ -38,7 +38,6 @@ public class CustomerService {
 
         existingCustomer.setCustomerImage(customer.getCustomerImage());
         existingCustomer.setCustomerName(customer.getCustomerName());
-        existingCustomer.setCustomerGender(customer.getCustomerGender());
         existingCustomer.setCustomerDob(customer.getCustomerDob());
         existingCustomer.setCustomerAddress(customer.getCustomerAddress());
         existingCustomer.setCustomerPhone(customer.getCustomerPhone());

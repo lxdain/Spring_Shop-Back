@@ -3,64 +3,51 @@ package com.springshop.app.model;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name = "sales")
 public class Sale implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, updatable = false)
-    private int saleId;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date saleDate;
+    private int id;
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @ManyToMany
-    @JoinTable(
-            name = "sale_product",
-            joinColumns = @JoinColumn(name = "sale_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id")
-    )
-    private List<Product> products;
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
 
-    private float saleItemPrice;
-    private float saleTotal;
+    private int quantity;
 
-    // Constructors
+    @Temporal(TemporalType.DATE)
+    private Date saleDate;
 
-    public Sale() {
-    }
+    private double totalPrice;
 
-    public Sale(int saleId, Date saleDate, Customer customer, List<Product> products, float saleItemPrice, float saleTotal) {
-        this.saleId = saleId;
-        this.saleDate = saleDate;
+    public Sale() {}
+
+    public Sale(Customer customer, Product product, int quantity, Date saleDate) {
         this.customer = customer;
-        this.products = products;
-        this.saleItemPrice = saleItemPrice;
-        this.saleTotal = saleTotal;
-    }
-
-    // Getters and Setters
-
-    public int getSaleId() {
-        return saleId;
-    }
-
-    public void setSaleId(int saleId) {
-        this.saleId = saleId;
-    }
-
-    public Date getSaleDate() {
-        return saleDate;
-    }
-
-    public void setSaleDate(Date saleDate) {
+        this.product = product;
+        this.quantity = quantity;
         this.saleDate = saleDate;
+        this.totalPrice = calculateTotalPrice();
+    }
+
+    public double calculateTotalPrice() {
+        return product.getProductPrice() * quantity;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Customer getCustomer() {
@@ -71,39 +58,47 @@ public class Sale implements Serializable {
         this.customer = customer;
     }
 
-    public List<Product> getProducts() {
-        return products;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setProducts(List<Product> products) {
-        this.products = products;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
-    public float getSaleItemPrice() {
-        return saleItemPrice;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public void setSaleItemPrice(float saleItemPrice) {
-        this.saleItemPrice = saleItemPrice;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
-    public float getSaleTotal() {
-        return saleTotal;
+    public Date getSaleDate() {
+        return saleDate;
     }
 
-    public void setSaleTotal(float saleTotal) {
-        this.saleTotal = saleTotal;
+    public void setSaleDate(Date saleDate) {
+        this.saleDate = saleDate;
+    }
+
+    public double getTotalPrice() {
+        return calculateTotalPrice();
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = calculateTotalPrice();
     }
 
     @Override
     public String toString() {
         return "Sale{" +
-                "saleId=" + saleId +
-                ", saleDate=" + saleDate +
+                "id=" + id +
                 ", customer=" + customer +
-                ", products=" + products +
-                ", saleItemPrice=" + saleItemPrice +
-                ", saleTotal=" + saleTotal +
+                ", product=" + product +
+                ", quantity=" + quantity +
+                ", saleDate=" + saleDate +
+                ", totalPrice=" + totalPrice +
                 '}';
     }
 }
