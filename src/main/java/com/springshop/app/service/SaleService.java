@@ -31,32 +31,14 @@ public class SaleService {
         return saleRepository.save(sale);
     }
 
-//    public Sale updateSale(int id, Sale updatedSale) {
-//        Sale existingSale = getSaleById(id);
-//        if (existingSale == null) {
-//            throw new SaleNotFoundException("Sale not found with id: " + id);
-//        }
-//
-//        existingSale.setSaleDate(updatedSale.getSaleDate());
-//        existingSale.setProductPrice(updatedSale.getProduct().getProductPrice()); // Update productPrice
-//        existingSale.setTotalPrice(updatedSale.getTotalPrice()); // Update total price
-//
-//        return saleRepository.save(existingSale);
-//    }
-
     public Sale updateSale(int id, Sale updatedSale) {
         Sale existingSale = getSaleById(id);
         if (existingSale == null) {
             throw new SaleNotFoundException("Sale not found with id: " + id);
         }
 
-        // Update saleDate
         existingSale.setSaleDate(updatedSale.getSaleDate());
-
-        // Update productPrice from the associated Product
-        existingSale.setProduct(updatedSale.getProduct()); // Update the associated Product
-
-        // Recalculate totalPrice based on the updated productPrice and quantity
+        existingSale.setProduct(updatedSale.getProduct());
         existingSale.setTotalPrice(existingSale.calculateTotalPrice());
 
         return saleRepository.save(existingSale);

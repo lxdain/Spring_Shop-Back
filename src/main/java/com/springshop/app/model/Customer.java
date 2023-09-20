@@ -3,7 +3,6 @@ package com.springshop.app.model;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name = "customers")

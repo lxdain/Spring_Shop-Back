@@ -15,8 +15,6 @@ public class Product implements Serializable {
     private String productImage;
     private float productPrice;
 
-    // Constructors
-
     public Product() {}
 
     public Product(int productId, String productName, String productDescription, String productImage, float productPrice) {
