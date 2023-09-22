@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { CustomersService } from './customers.service';
 
 @Component({
   selector: 'app-customers',
@@ -16,4 +17,15 @@ import { Component } from '@angular/core';
     '../../assets/css/Team-Horizontal-images.css'
   ]
 })
-export class CustomersComponent {}
+export class CustomersComponent implements OnInit {
+  customers: any[] = []; // Declare and initialize the customers property as an empty array
+
+  constructor(private customersService: CustomersService) { }
+
+  ngOnInit(): void {
+    // Call your service method to fetch customers and assign the result to the customers property
+    this.customersService.getCustomers().subscribe((data) => {
+      this.customers = data;
+    });
+  }
+}

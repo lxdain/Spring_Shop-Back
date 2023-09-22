@@ -26,7 +26,7 @@
                 <div class="container-fluid">
                     <h3 class="text-dark mb-1">Customers</h3>
                 </div>
-                <div class="card" style="width: auto; height: auto; max-width: 500px; max-height: 350px;">
+                <!-- <div class="card" style="width: auto; height: auto; max-width: 500px; max-height: 350px;">
                     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
                     <div class="container">
                         <div class="row">
@@ -53,6 +53,35 @@
                             </div>
                         </div>
                     </div>
+                </div> -->
+                <div class="container">
+                  <div class="row">
+                    <div class="col-lg-4" *ngFor="let customer of customers">
+                      <div class="card m-b-30">
+                        <div class="card-body">
+                          <div class="media">
+                            <img class="d-flex mr-3 rounded-circle img-thumbnail thumb-lg" [src]="customer.customerImage" alt="Customer Image" />
+                            <div class="media-body">
+                              <h5 class="mt-0 font-18 mb-1">{{ customer.customerName }}</h5>
+                              <p class="text-muted font-14">{{ customer.customerDob | date: 'mediumDate' }}</p>
+                              <p class="text-muted font-14">{{ customer.customerPhone }}</p>
+                              <p class="text-muted font-14">{{ customer.customerEmail }}</p>
+                              <p class="text-muted font-14">{{ customer.customerAddress }}</p>
+                              <p class="text-muted font-14">{{ customer.customerCreditCard }}</p>
+                              <ul class="social-links list-inline mb-0">
+                                <li class="list-inline-item">
+                                  <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="" data-original-title="Edit"><i class="fa fa-pencil"></i></a>
+                                </li>
+                                <li class="list-inline-item">
+                                  <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="" data-original-title="Delete"><i class="fa fa-trash"></i></a>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-plus"></i></a>
             </div>
