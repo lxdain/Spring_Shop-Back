@@ -23,9 +23,16 @@ export class CustomersComponent implements OnInit {
   constructor(private customersService: CustomersService) { }
 
   ngOnInit(): void {
-    // Call your service method to fetch customers and assign the result to the customers property
     this.customersService.getCustomers().subscribe((data) => {
       this.customers = data;
+    });
+  }
+
+  deleteCustomer(customerId: number, event: Event): void {
+    event.preventDefault();
+
+    this.customersService.deleteCustomer(customerId).subscribe(() => {
+      this.customers = this.customers.filter(c => c.customerId !== customerId);
     });
   }
 }

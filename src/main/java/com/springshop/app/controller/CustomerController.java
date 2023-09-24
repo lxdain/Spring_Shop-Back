@@ -40,6 +40,7 @@ public class CustomerController {
 
     @DeleteMapping("/delete/{id}")
     public void deleteCustomer(@PathVariable int id) {
+        System.out.println("Deleting customer with ID: " + id);
         customerService.deleteCustomerById(id);
     }
 }

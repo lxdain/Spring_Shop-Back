@@ -1,20 +1,24 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Customer } from './customer.model'; // Import your customer model if you have one
+import { Customer } from './customer.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CustomersService {
 
-  private apiUrl: string = 'http://localhost:8080'; // Replace with your API URL
+  private apiUrl: string = 'http://localhost:8080';
 
   constructor(private http: HttpClient) { }
 
-  // Method to fetch a list of customers
   getCustomers(): Observable<Customer[]> {
-    const url = `${this.apiUrl}/customers/all`; // Adjust the URL as per your API endpoints
+    const url = `${this.apiUrl}/customers/all`;
     return this.http.get<Customer[]>(url);
+  }
+
+  deleteCustomer(customerId: number): Observable<void> {
+    const url = `${this.apiUrl}/customers/delete/${customerId}`;
+    return this.http.delete<void>(url);
   }
 }

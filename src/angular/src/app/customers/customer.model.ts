@@ -7,4 +7,4 @@ export interface Customer {
     customerPhone: string;
     customerEmail: string;
     customerCreditCard: string;
-  }  
+  }
