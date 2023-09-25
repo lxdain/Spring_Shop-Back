@@ -34,7 +34,7 @@
                                     <div class="col-md-12"><a class="product-image" href="#"><img [src]="product.productImage"></a>
                                         <div class="row">
                                             <div class="col" style="text-align: center;">
-                                                <i class="fas fa-pencil-alt" style="font-size: 20px;"></i>
+                                                <i class="fas fa-pencil-alt" style="font-size: 20px;" (click)="openEditModal(product.productId)"></i>
                                             </div>
                                             <div class="col" style="text-align: center;">
                                                 <i class="far fa-trash-alt" style="font-size: 20px;" (click)="deleteProduct(product.productId, $event)"></i>

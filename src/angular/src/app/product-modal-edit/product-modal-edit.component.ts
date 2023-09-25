@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { ProductsService } from '../products/products.service';
+import { Product } from '../products/product.model';
 
 @Component({
   selector: 'app-product-modal-edit',
@@ -18,4 +21,22 @@ import { Component } from '@angular/core';
     '../../assets/fonts/simple-line-icons.min.css'
   ]
 })
-export class ProductModalEditComponent {}
+export class ProductModalEditComponent {
+  @Input() productData!: Product;
+
+  constructor(public activeModal: NgbActiveModal, private productsService: ProductsService) {}
+
+  updateProduct(productId: number) {
+    if (this.productData) {
+      this.productsService.updateProduct(this.productData).subscribe(
+        (updatedProduct) => {
+          console.log('Product updated:', updatedProduct);
+          this.activeModal.close();
+        },
+        (error) => {
+          console.error('Error updating product:', error);
+        }
+      );
+    }
+  }
+}
