@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CustomersService } from './customers.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CustomerModalComponent } from '../customer-modal/customer-modal.component';
 
 @Component({
   selector: 'app-customers',
@@ -20,7 +22,7 @@ import { CustomersService } from './customers.service';
 export class CustomersComponent implements OnInit {
   customers: any[] = []; // Declare and initialize the customers property as an empty array
 
-  constructor(private customersService: CustomersService) { }
+  constructor(private customersService: CustomersService, private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.customersService.getCustomers().subscribe((data) => {
@@ -35,4 +37,20 @@ export class CustomersComponent implements OnInit {
       this.customers = this.customers.filter(c => c.customerId !== customerId);
     });
   }
+
+  openAddCustomerModal(event: Event) {
+    event.preventDefault();
+    const modalRef = this.modalService.open(CustomerModalComponent, {
+      centered: true,
+    });
+  
+    modalRef.result.then(
+      (result) => {
+        // Handle modal close (if needed)
+      },
+      (reason) => {
+        // Handle modal dismissal (if needed)
+      }
+    );
+  }  
 }
