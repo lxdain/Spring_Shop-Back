@@ -1,13 +1,13 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { CustomersService } from '../customers/customers.service';
-import { Customer } from '../customers/customer.model';
+import { ProductsService } from '../products/products.service'; // Import your product service
+import { Product } from '../products/product.model'; // Import your product model
 
 @Component({
-  selector: 'app-customer-modal',
-  templateUrl: './customer-modal.component.html',
+  selector: 'app-product-modal',
+  templateUrl: './product-modal.component.html',
   styleUrls: [
-    './customer-modal.component.css',
+    './product-modal.component.css',
     '../../assets/bootstrap/css/bootstrap.min.css',
     '../../assets/fonts/fontawesome-all.min.css',
     '../../assets/fonts/font-awesome.min.css',
@@ -21,30 +21,27 @@ import { Customer } from '../customers/customer.model';
     '../../assets/fonts/simple-line-icons.min.css'
   ]
 })
-export class CustomerModalComponent {
-  newCustomer: Customer = {
-    customerId: 0,
-    customerImage: '',
-    customerName: '',
-    customerDob: new Date(),
-    customerAddress: '',
-    customerPhone: '',
-    customerEmail: '',
-    customerCreditCard: ''
+export class ProductModalComponent {
+  newProduct: Product = {
+    productId: 0,
+    productName: '',
+    productDescription: '',
+    productImage: '',
+    productPrice: 0,
   };
 
-  constructor(public activeModal: NgbActiveModal, private customersService: CustomersService) {}
+  constructor(public activeModal: NgbActiveModal, private productsService: ProductsService) {}
 
-  saveCustomer() {
-    console.log('New Customer:', this.newCustomer);
-    this.customersService.addCustomer(this.newCustomer).subscribe(
+  saveProduct() {
+    console.log('New Product:', this.newProduct);
+    this.productsService.addProduct(this.newProduct).subscribe(
       (response) => {
-        console.log('Customer added:', response);
+        console.log('Product added:', response);
         this.activeModal.close();
         window.location.reload();
       },
       (error) => {
-        console.error('Error adding customer:', error);
+        console.error('Error adding product:', error);
       }
     );
   }
