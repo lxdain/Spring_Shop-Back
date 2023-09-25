@@ -16,6 +16,7 @@ import { CustomerModalComponent } from './customer-modal/customer-modal.componen
 
 // Import the CustomersService
 import { CustomersService } from './customers/customers.service';
+import { CustomerModalEditComponent } from './customer-modal-edit/customer-modal-edit.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { CustomersService } from './customers/customers.service';
     TransactionsComponent,
     ProductsComponent,
     CustomersComponent,
-    CustomerModalComponent
+    CustomerModalComponent,
+    CustomerModalEditComponent
   ],
   imports: [
     BrowserModule,

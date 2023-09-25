@@ -26,34 +26,6 @@
                 <div class="container-fluid">
                     <h3 class="text-dark mb-1">Customers</h3>
                 </div>
-                <!-- <div class="card" style="width: auto; height: auto; max-width: 500px; max-height: 350px;">
-                    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <div class="card m-b-30">
-                                    <div class="card-body">
-                                        <div class="media">
-                                            <img class="d-flex mr-3 rounded-circle img-thumbnail thumb-lg" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="Generic placeholder image" />
-                                            <div class="media-body">
-                                                <h5 class="mt-0 font-18 mb-1">Pauline I. Bird</h5>
-                                                <p class="text-muted font-14">Web developer</p>
-                                                <ul class="social-links list-inline mb-0">
-                                                    <li class="list-inline-item">
-                                                        <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="" data-original-title="Twitter"><i class="fa fa-pencil"></i></a>
-                                                    </li>
-                                                    <li class="list-inline-item">
-                                                        <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="" data-original-title="1234567890"><i class="fa fa-trash"></i></a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
                 <div class="container">
                   <div class="row">
                     <div class="col-lg-4" *ngFor="let customer of customers">
@@ -70,7 +42,7 @@
                               <p class="text-muted font-14">{{ customer.customerCreditCard }}</p>
                               <ul class="social-links list-inline mb-0">
                                 <li class="list-inline-item">
-                                  <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="" data-original-title="Edit"><i class="fa fa-pencil"></i></a>
+                                  <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" data-original-title="Edit" (click)="openEditModal(customer.customerId)"><i class="fa fa-pencil"></i></a>
                                 </li>
                                 <li class="list-inline-item">
                                     <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" (click)="deleteCustomer(customer.customerId, $event)" data-original-title="Delete" href="#">

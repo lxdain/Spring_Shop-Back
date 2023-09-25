@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CustomersService } from './customers.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CustomerModalComponent } from '../customer-modal/customer-modal.component';
+import { CustomerModalEditComponent } from '../customer-modal-edit/customer-modal-edit.component';
+import { Customer } from './customer.model';
 
 @Component({
   selector: 'app-customers',
@@ -16,15 +18,20 @@ import { CustomerModalComponent } from '../customer-modal/customer-modal.compone
     '../../assets/css/Contact-Directory.css',
     '../../assets/css/Manage-Users.css',
     '../../assets/css/Team-Horizontal-icons.css',
-    '../../assets/css/Team-Horizontal-images.css'
+    '../../assets/css/Team-Horizontal-images.css',
   ]
 })
 export class CustomersComponent implements OnInit {
-  customers: any[] = []; // Declare and initialize the customers property as an empty array
+  customers: Customer[] = [];
+  selectedCustomer: Customer | null = null;
 
   constructor(private customersService: CustomersService, private modalService: NgbModal) { }
 
   ngOnInit(): void {
+    this.loadCustomers();
+  }
+
+  loadCustomers(): void {
     this.customersService.getCustomers().subscribe((data) => {
       this.customers = data;
     });
@@ -38,19 +45,30 @@ export class CustomersComponent implements OnInit {
     });
   }
 
+  editCustomer(customerId: number): void {
+    console.log('Editing customer with ID:', customerId);
+  }
+
   openAddCustomerModal(event: Event) {
     event.preventDefault();
     const modalRef = this.modalService.open(CustomerModalComponent, {
       centered: true,
     });
-  
+
     modalRef.result.then(
       (result) => {
-        // Handle modal close (if needed)
+        if (result === 'saved') {
+          this.loadCustomers();
+        }
       },
-      (reason) => {
-        // Handle modal dismissal (if needed)
-      }
+      (reason) => {}
     );
+  }
+
+  openEditModal(customerId: number): void {
+    console.log('Opening edit modal for customer ID:', customerId);
+    this.selectedCustomer = this.customers.find((customer) => customer.customerId === customerId) || null;
+    const modalRef = this.modalService.open(CustomerModalEditComponent);
+    modalRef.componentInstance.customerData = this.selectedCustomer;
   }  
 }

@@ -1,13 +1,13 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { CustomersService } from '../customers/customers.service';
 import { Customer } from '../customers/customer.model';
 
 @Component({
-  selector: 'app-customer-modal',
-  templateUrl: './customer-modal.component.html',
+  selector: 'app-customer-modal-edit',
+  templateUrl: './customer-modal-edit.component.html',
   styleUrls: [
-    './customer-modal.component.css',
+    './customer-modal-edit.component.css',
     '../../assets/bootstrap/css/bootstrap.min.css',
     '../../assets/fonts/fontawesome-all.min.css',
     '../../assets/fonts/font-awesome.min.css',
@@ -21,31 +21,22 @@ import { Customer } from '../customers/customer.model';
     '../../assets/fonts/simple-line-icons.min.css'
   ],
 })
-export class CustomerModalComponent {
-  newCustomer: Customer = {
-    customerId: 0,
-    customerImage: '',
-    customerName: '',
-    customerDob: new Date(),
-    customerAddress: '',
-    customerPhone: '',
-    customerEmail: '',
-    customerCreditCard: ''
-  };
+export class CustomerModalEditComponent {
+  @Input() customerData!: Customer;
 
   constructor(public activeModal: NgbActiveModal, private customersService: CustomersService) {}
 
-  saveCustomer() {
-    console.log('New Customer:', this.newCustomer);
-    this.customersService.addCustomer(this.newCustomer).subscribe(
-      (response) => {
-        console.log('Customer added:', response);
-        this.activeModal.close();
-        window.location.reload();
-      },
-      (error) => {
-        console.error('Error adding customer:', error);
-      }
-    );
+  updateCustomer(customerId: number) {
+    if (this.customerData) {
+      this.customersService.updateCustomer(this.customerData).subscribe(
+        (updatedCustomer) => {
+          console.log('Customer updated:', updatedCustomer);
+          this.activeModal.close();
+        },
+        (error) => {
+          console.error('Error updating customer:', error);
+        }
+      );
+    }
   }
 }

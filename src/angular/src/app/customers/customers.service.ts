@@ -20,6 +20,12 @@ export class CustomersService {
     return this.http.get<Customer[]>(url);
   }
 
+  getCustomerById(customerId: number): Observable<Customer> {
+    const url = `${this.apiUrl}/customers/search/${customerId}`;
+    return this.http.get<Customer>(url);
+  }
+  
+
   deleteCustomer(customerId: number): Observable<void> {
     const url = `${this.apiUrl}/customers/delete/${customerId}`;
     return this.http.delete<void>(url);
@@ -28,5 +34,10 @@ export class CustomersService {
   addCustomer(customer: Customer): Observable<Customer> {
     const url = `${this.apiUrl}/customers/add`;
     return this.http.post<Customer>(url, customer, { headers: this.headers });
+  }
+
+  updateCustomer(customer: Customer): Observable<Customer> {
+    const url = `${this.apiUrl}/customers/update/${customer.customerId}`;
+    return this.http.put<Customer>(url, customer, { headers: this.headers });
   }
 }
