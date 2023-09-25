@@ -18,6 +18,4 @@ import { Component } from '@angular/core';
     '../../assets/fonts/simple-line-icons.min.css'
   ]
 })
-export class ProductModalEditComponent {
-
-}
+export class ProductModalEditComponent {}

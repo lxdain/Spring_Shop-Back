@@ -28,7 +28,6 @@
                 </div>
                 <div class="container">
                     <div class="row product-list dev">
-                        <!-- Use ngFor to loop through products -->
                         <div class="col-sm-6 col-md-4 product-item animation-element slide-top-left" *ngFor="let product of products">
                             <div class="product-container" style="max-width: 350px; max-height: 600px; border-radius: 10px;">
                                 <div class="row">
@@ -54,16 +53,15 @@
                                         <p class="product-description text-muted font-14">{{ product.productDescription }}</p>
                                         <div class="row">
                                             <div class="col">
-                                                <div class="dropdown" style="text-align: center; margin-bottom: 20px;">
-                                                    <button class="btn btn-primary dropdown-toggle" aria-expanded="false"
-                                                        data-bs-toggle="dropdown" type="button" style="background: rgb(169,170,179); border-radius: 5px;">
-                                                        Customer
+                                                <div ngbDropdown class="d-inline-block" style="text-align: center; margin-bottom: 20px;">
+                                                    <button class="btn btn-primary" id="dropdownCustomer" ngbDropdownToggle [attr.aria-expanded]="isDropdownOpen" style="background-color: rgb(169,170,179); border-radius: 5px;">
+                                                      {{ selectedCustomer?.customerName || 'Customer' }}
                                                     </button>
-                                                    <div class="dropdown-menu">
-                                                        <!-- Loop through customers here if needed -->
-                                                        <a class="dropdown-item" href="#" *ngFor="let customer of customers">{{ customer.customerName }}</a>
+                                                    <div ngbDropdownMenu aria-labelledby="dropdownCustomer">
+                                                      <button class="dropdown-item" *ngFor="let customer of customers" (click)="selectCustomer(customer)" style="background-color: white; color: #8898aa;">{{ customer.customerName }}</button>
                                                     </div>
-                                                </div>
+                                                </div>                                                  
+                                                <br>
                                                 <span>Quantity:</span>
                                                 <div class="btn-group" role="group"></div>
                                                 <input type="number" style="max-width: 50px; margin-left: 5px; margin-top: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; border-color: var(--bs-body-color); border-radius: 5px;">
@@ -79,7 +77,6 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- End of ngFor loop -->
                     </div>
                 </div>
                 <a class="border rounded d-inline scroll-to-top" href="#page-top" (click)="openAddProductModal($event)"><i class="fas fa-plus"></i></a>

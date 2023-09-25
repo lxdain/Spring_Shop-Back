@@ -1,9 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
 import { ProductsService } from './products.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ProductModalComponent } from '../product-modal/product-modal.component';
 import { ProductModalEditComponent } from '../product-modal-edit/product-modal-edit.component';
 import { Product } from './product.model';
+import { Customer } from '../customers/customer.model';
+import { CustomersService } from './../customers/customers.service';
 
 @Component({
   selector: 'app-products',
@@ -21,16 +23,22 @@ import { Product } from './product.model';
     '../../assets/css/Team-Horizontal-images.css',
   ]
 })
-export class ProductsComponent implements OnInit {
+export class ProductsComponent implements OnInit, AfterViewInit {
   products: Product[] = [];
   selectedProduct: Product | null = null;
-  @Input() customers: any[] = []; // Input to receive customers data
+  customers: Customer[] = []; // Customers data array
+  isDropdownOpen = false; // Track the dropdown state
+  selectedCustomer: Customer | null = null;
 
-  constructor(private productsService: ProductsService, private modalService: NgbModal) {}
+  constructor(private productsService: ProductsService, private customersService: CustomersService, private modalService: NgbModal) {}
 
   ngOnInit(): void {
     this.loadProducts();
+    this.loadCustomers(); // Dropdown gets populated with customers
+    console.log(this.customers);
   }
+
+  ngAfterViewInit(): void {}
 
   loadProducts(): void {
     this.productsService.getProducts().subscribe((data) => {
@@ -42,12 +50,35 @@ export class ProductsComponent implements OnInit {
     event.preventDefault();
 
     this.productsService.deleteProduct(productId).subscribe(() => {
-      this.products = this.products.filter(p => p.productId !== productId); // ovde je bilo (p) =>
+      this.products = this.products.filter((product) => product.productId !== productId);
     });
   }
 
   editProduct(productId: number): void {
     console.log('Editing product with ID:', productId);
+  }
+
+  toggleDropdown(): void {
+    this.isDropdownOpen = !this.isDropdownOpen;
+    if (this.isDropdownOpen && this.customers.length === 0) {
+      this.loadCustomers();
+    }
+  }
+
+  loadCustomers(): void {
+    this.customersService.getCustomers().subscribe(
+      (data: Customer[]) => {
+        this.customers = data;
+      },
+      (error) => {
+        console.error('Error loading customers:', error);
+      }
+    );
+  }
+
+  selectCustomer(customer: Customer): void {
+    this.selectedCustomer = customer;
+    this.isDropdownOpen = false; // Close the dropdown after selection
   }
 
   openAddProductModal(event: Event) {
@@ -68,7 +99,7 @@ export class ProductsComponent implements OnInit {
 
   openEditModal(productId: number): void {
     console.log('Opening edit modal for product ID:', productId);
-    this.selectedProduct = this.products.find((product) => product.productId === productId) || null; // ovde je bilo (p) =>
+    this.selectedProduct = this.products.find((product) => product.productId === productId) || null;
     const modalRef = this.modalService.open(ProductModalEditComponent);
     modalRef.componentInstance.productData = this.selectedProduct;
   }
