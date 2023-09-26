@@ -5,27 +5,21 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "sales")
+@Table(name = "sales", schema = "springular_shop")
 public class Sale implements Serializable {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, updatable = false)
     private int id;
-
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
-
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
-
     private int quantity;
-
     @Temporal(TemporalType.DATE)
     private Date saleDate;
-
     private double totalPrice;
 
     public Sale() {}

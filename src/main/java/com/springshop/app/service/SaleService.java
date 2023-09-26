@@ -23,8 +23,7 @@ public class SaleService {
     }
 
     public Sale getSaleById(int id) {
-        return saleRepository.findById(id)
-                .orElseThrow(() -> new SaleNotFoundException("Sale with ID " + id + " not found."));
+        return saleRepository.findById(id).orElseThrow(() -> new SaleNotFoundException("Sale with ID " + id + " not found."));
     }
 
     public Sale addSale(Sale sale) {

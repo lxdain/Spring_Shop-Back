@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "customers")
+@Table(name = "customers", schema = "springular_shop")
 public class Customer implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,6 +13,7 @@ public class Customer implements Serializable {
     private int customerId;
     private String customerImage;
     private String customerName;
+    @Temporal(TemporalType.DATE)
     private Date customerDob;
     private String customerAddress;
     private String customerPhone;
