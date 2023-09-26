@@ -64,11 +64,12 @@
                                                 <br>
                                                 <span>Quantity:</span>
                                                 <div class="btn-group" role="group"></div>
-                                                <input type="number" style="max-width: 50px; margin-left: 5px; margin-top: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; border-color: var(--bs-body-color); border-radius: 5px;">
+                                                <input type="number" [(ngModel)]="quantity" style="max-width: 50px; margin-left: 5px; margin-top: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; border-color: var(--bs-body-color); border-radius: 5px;">
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-6"><button class="btn btn-light" type="button" style="margin-top: 15px; border-radius: 5px;">Buy</button></div>
+                                            <!-- Updated the button click event to call registerTransaction -->
+                                            <button class="btn btn-light" type="button" style="margin-top: 15px; border-radius: 5px;" (click)="registerTransaction(product, selectedCustomer, quantity)">Buy</button>
                                             <div class="col-6">
                                                 <p class="product-price" style="margin-top: 5px;">{{ product.productPrice | currency: 'USD' }}</p>
                                             </div>

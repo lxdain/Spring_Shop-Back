@@ -6,6 +6,8 @@ import { ProductModalEditComponent } from '../product-modal-edit/product-modal-e
 import { Product } from './product.model';
 import { Customer } from '../customers/customer.model';
 import { CustomersService } from './../customers/customers.service';
+import { HttpClient } from '@angular/common/http'; 
+import { TransactionsService } from '../transactions/transactions.service';
 
 @Component({
   selector: 'app-products',
@@ -26,11 +28,13 @@ import { CustomersService } from './../customers/customers.service';
 export class ProductsComponent implements OnInit, AfterViewInit {
   products: Product[] = [];
   selectedProduct: Product | null = null;
-  customers: Customer[] = []; // Customers data array
-  isDropdownOpen = false; // Track the dropdown state
+  customers: Customer[] = [];
+  isDropdownOpen = false;
   selectedCustomer: Customer | null = null;
+  quantity: number = 1; // Initialize the quantity property with a default value
 
-  constructor(private productsService: ProductsService, private customersService: CustomersService, private modalService: NgbModal) {}
+
+  constructor(private productsService: ProductsService, private customersService: CustomersService, private transactionsService: TransactionsService, private modalService: NgbModal, private http: HttpClient) {}
 
   ngOnInit(): void {
     this.loadProducts();
@@ -103,4 +107,23 @@ export class ProductsComponent implements OnInit, AfterViewInit {
     const modalRef = this.modalService.open(ProductModalEditComponent);
     modalRef.componentInstance.productData = this.selectedProduct;
   }
+
+  registerTransaction(product: Product, selectedCustomer: Customer | null, quantity: number): void {
+    if (product && selectedCustomer !== null && selectedCustomer !== null && quantity > 0) {
+      const saleData = {
+        productId: product.productId,
+        customerId: selectedCustomer.customerId,
+        quantity: quantity,
+      };
+  
+      // Call the TransactionsService to create a new sale
+      this.transactionsService.addSale(saleData).subscribe(() => {
+        // Optional: You can add a success message or refresh the product list
+        console.log('Sale registered successfully');
+        this.loadProducts();
+      });
+    } else {
+      console.error('Invalid sale data');
+    }
+  }  
 }
