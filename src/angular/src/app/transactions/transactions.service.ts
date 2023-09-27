@@ -1,25 +1,27 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Transaction } from './transaction.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TransactionsService {
-  private apiUrl = 'http://localhost:8080';
+  private apiUrl: string = 'http://localhost:8080';
+
+  private headers = new HttpHeaders({
+    'Content-Type': 'application/json',
+  });
 
   constructor(private http: HttpClient) {}
 
-  getAllSales(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/sales/all`);
+  getTransactions(): Observable<Transaction[]> {
+    const url = `${this.apiUrl}/sales/all`;
+    return this.http.get<Transaction[]>(url);
   }
 
-  deleteSale(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/sales/delete/${id}`);
-  }
-
-  addSale(saleData: any): Observable<any> {
-    const url = `${this.apiUrl}/sales/add`;
-    return this.http.post(url, saleData);
+  deleteTransaction(transactionId: number): Observable<void> {
+    const url = `${this.apiUrl}/sales/delete/${transactionId}`;
+    return this.http.delete<void>(url);
   }
 }

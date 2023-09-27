@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { TransactionsService } from './transactions.service'; // Import the TransactionsService
-import { Product } from '../products/product.model';
-import { HttpClient } from '@angular/common/http'; // Import HttpClient
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ProductsComponent } from '../products/products.component';
+import { Transaction } from './transaction.model'; // Import the Transaction model
+import { TransactionsService } from './transactions.service'; // Import the TransactionsService
 
 @Component({
   selector: 'app-transactions',
@@ -11,32 +9,35 @@ import { ProductsComponent } from '../products/products.component';
   styleUrls: [
     './transactions.component.css',
     '../../assets/bootstrap/css/bootstrap.min.css',
-    '../../assets/css/Team-Horizontal-icons.css',
-    '../../assets/css/Team-Horizontal-images.css',
     '../../assets/fonts/fontawesome-all.min.css',
+    '../../assets/css/Animated-Pretty-Product-List-v12-Animated-Pretty-Product-List.css',
+    '../../assets/css/Contact-Directory.css',
+    '../../assets/css/Form.css',
+    '../../assets/css/Manage-Users.css',
+    '../../assets/css/Team-Horizontal-icons.css',
+    '../../assets/css/Team-Horizontal-images.css'
   ],
 })
 export class TransactionsComponent implements OnInit {
-  transactions: any[] = []; // Define an array to store transactions data
+  transactions: Transaction[] = [];
 
-  constructor(private transactionsService: TransactionsService, private http: HttpClient, private modalService: NgbModal) {}
+  constructor(private transactionsService: TransactionsService, private modalService: NgbModal) {}
 
   ngOnInit(): void {
-    this.loadSales(); // Call the function to load transactions data on component initialization
+    this.loadTransactions();
   }
 
-  loadSales(): void {
-    this.transactionsService.getAllSales().subscribe((data) => {
-      this.transactions = data; // Assign the fetched transactions data to the component's property
+  loadTransactions(): void {
+    this.transactionsService.getTransactions().subscribe((data) => {
+      this.transactions = data;
     });
   }
 
-  deleteSale(id: number): void {
-    if (confirm('Are you sure you want to delete this transaction?')) {
-      this.transactionsService.deleteSale(id).subscribe(() => {
-        // After successful deletion, remove the transaction from the displayed list
-        this.transactions = this.transactions.filter((transaction) => transaction.id !== id);
-      });
-    }
+  deleteTransaction(transactionId: number): void {
+    this.transactionsService.deleteTransaction(transactionId).subscribe(() => {
+      this.transactions = this.transactions.filter(
+        (transaction) => transaction.id !== transactionId
+      );
+    });
   }
 }
