@@ -7,6 +7,7 @@ import { Product } from './product.model';
 import { Customer } from '../customers/customer.model';
 import { CustomersService } from './../customers/customers.service';
 import { HttpClient } from '@angular/common/http'; 
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-products',
@@ -30,10 +31,9 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   customers: Customer[] = [];
   isDropdownOpen = false;
   selectedCustomer: Customer | null = null;
-  quantity: number = 1; // Initialize the quantity property with a default value
+  quantity: number = 1;
 
-
-  constructor(private productsService: ProductsService, private customersService: CustomersService, private modalService: NgbModal, private http: HttpClient) {}
+  constructor(private productsService: ProductsService, private customersService: CustomersService, private modalService: NgbModal, private http: HttpClient, private router: Router) {}
 
   ngOnInit(): void {
     this.loadProducts();
@@ -81,7 +81,51 @@ export class ProductsComponent implements OnInit, AfterViewInit {
 
   selectCustomer(customer: Customer): void {
     this.selectedCustomer = customer;
-    this.isDropdownOpen = false; // Close the dropdown after selection
+    this.isDropdownOpen = false;
+  }
+
+  buyProduct(productId: number): void {
+    if (!this.selectedCustomer) {
+      alert('Please select a customer before buying.');
+      return;
+    }
+
+    if (this.quantity <= 0) {
+      alert('Please enter a valid quantity.');
+      return;
+    }
+
+    const product = this.products.find((p) => p.productId === productId);
+
+    if (!product) {
+      alert('Product not found.');
+      return;
+    }
+    
+    const totalPrice = product.productPrice * this.quantity;
+
+    const transaction = {
+      customer: {
+        customerId: this.selectedCustomer.customerId,
+      },
+      product: {
+        productId: productId,
+      },
+      quantity: this.quantity,
+      saleDate: new Date().toISOString().split('T')[0]
+    };
+
+    this.http.post('http://localhost:8080/sales/add', transaction).subscribe(
+      (response) => {
+        console.log('Transaction successful:', response);
+        this.quantity = 1;
+        this.router.navigate(['/transactions']);
+      },
+      (error) => {
+        console.error('Error recording transaction:', error);
+        alert('Error recording transaction. Please try again.');
+      }
+    );
   }
 
   openAddProductModal(event: Event) {
