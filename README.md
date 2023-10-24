@@ -20,4 +20,4 @@
 ## Developer Notes
 In the near future I will try to Dockerize this project so that it runs smoothly on any enviroment.
 
-I've made a mess using branches because this was the first semi-serious Angular project I made, so all the branches until the point of functionality regarding Angular and various hotfix branches have been merged into **main** and deleted to lessen the amount of confusion I've faced every time I came back to the project after taking some time off.
+I've made a mess using branches because this was the first semi-serious Angular project I made, so all the branches created before reaching the point of complete functionality regarding Angular and various hotfix branches have been merged into **main** and deleted to lessen the amount of confusion I've faced every time I came back to the project after taking some time off.
