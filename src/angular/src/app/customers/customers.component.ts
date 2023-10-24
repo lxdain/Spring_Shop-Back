@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CustomersService } from './customers.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { CustomerModalComponent } from '../customer-modal/customer-modal.component';
-import { CustomerModalEditComponent } from '../customer-modal-edit/customer-modal-edit.component';
+import { CustomerModalComponent } from './customer-modal/customer-modal.component';
+import { CustomerModalEditComponent } from './customer-modal-edit/customer-modal-edit.component';
 import { Customer } from './customer.model';
 
 @Component({

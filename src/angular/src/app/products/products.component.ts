@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
 import { ProductsService } from './products.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ProductModalComponent } from '../product-modal/product-modal.component';
-import { ProductModalEditComponent } from '../product-modal-edit/product-modal-edit.component';
+import { ProductModalComponent } from './product-modal/product-modal.component';
+import { ProductModalEditComponent } from './product-modal-edit/product-modal-edit.component';
 import { Product } from './product.model';
 import { Customer } from '../customers/customer.model';
 import { CustomersService } from './../customers/customers.service';

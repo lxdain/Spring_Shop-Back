@@ -13,13 +13,13 @@ import { TopbarComponent } from './topbar/topbar.component';
 import { TransactionsComponent } from './transactions/transactions.component';
 import { ProductsComponent } from './products/products.component';
 import { CustomersComponent } from './customers/customers.component';
-import { CustomerModalComponent } from './customer-modal/customer-modal.component';
+import { CustomerModalComponent } from './customers/customer-modal/customer-modal.component';
 
 // Import the CustomersService
 import { CustomersService } from './customers/customers.service';
-import { CustomerModalEditComponent } from './customer-modal-edit/customer-modal-edit.component';
-import { ProductModalComponent } from './product-modal/product-modal.component';
-import { ProductModalEditComponent } from './product-modal-edit/product-modal-edit.component';
+import { CustomerModalEditComponent } from './customers/customer-modal-edit/customer-modal-edit.component';
+import { ProductModalComponent } from './products/product-modal/product-modal.component';
+import { ProductModalEditComponent } from './products/product-modal-edit/product-modal-edit.component';
 
 @NgModule({
   declarations: [
